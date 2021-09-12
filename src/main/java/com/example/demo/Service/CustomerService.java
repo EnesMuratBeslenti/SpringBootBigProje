@@ -4,12 +4,12 @@ import com.example.demo.Entity.Customer;
 import com.example.demo.Repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
 
 
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class CustomerService {
@@ -29,6 +29,20 @@ public class CustomerService {
         customerRepository.save(customer);
     }
 
+    public Customer findCustomerById(Long customerId) {
+        Optional<Customer> customer = customerRepository.findById(customerId);
+        if (customer.isPresent()){
+            return customer.get();
+        }else{
+            return null;
+        }
+    }
+
+
+    /* public Optional<Customer> findByCustomerId(Long customerId){
+      return  customerRepository.findById(customerId);
+    }*/
+
     public void deleteCustomer(Long customerId) {
         boolean exists = customerRepository.existsById(customerId);
         if (!exists){
@@ -38,7 +52,8 @@ public class CustomerService {
         customerRepository.deleteById(customerId);
 
 
-    }
+        }
+
     @Transactional
     public void updateCustomer(Long customerId,
                                String name,
@@ -65,4 +80,8 @@ public class CustomerService {
 
         }
     }
+
+
+
 }
+

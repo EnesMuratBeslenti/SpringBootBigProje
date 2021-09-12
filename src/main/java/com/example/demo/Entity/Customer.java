@@ -1,6 +1,10 @@
 package com.example.demo.Entity;
 
+import com.sun.istack.NotNull;
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table
