@@ -1,6 +1,6 @@
 package com.example.demo.Service;
 
-import com.example.demo.Entity.Customer;
+import com.example.demo.Model.Customer;
 import com.example.demo.Repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,16 +38,11 @@ public class CustomerService {
         }
     }
 
-
-    /* public Optional<Customer> findByCustomerId(Long customerId){
-      return  customerRepository.findById(customerId);
-    }*/
-
     public void deleteCustomer(Long customerId) {
         boolean exists = customerRepository.existsById(customerId);
         if (!exists){
             throw  new IllegalStateException("" +
-                    "Student with id" + customerId + "does not exist");
+                    "Customer with id" + customerId + "does not exist");
         }
         customerRepository.deleteById(customerId);
 
