@@ -39,22 +39,22 @@ public class CustomerController {
 
     @PostMapping(path = "/add")
     public ResponseEntity<Customer> addCustomer(@RequestBody Customer customer){
-        if (    !customer.getName().isEmpty()  &&
-                !customer.getLastname().isEmpty() &&
-                !customer.getEmail().isEmpty()  )
-        {
-              customerService.addCustomer(customer);
-              return new ResponseEntity<>(customer , HttpStatus.CREATED);
+        Customer result = customerService.addCustomer(customer);
+       if (result != null){
 
-        }
-        else {
-            return new ResponseEntity<>(customer, HttpStatus.BAD_REQUEST);
-        }
+           return new ResponseEntity<>(result ,HttpStatus.CREATED);
+       }
+       return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     @DeleteMapping(path = "{customerId}")
-    public void deleteCustomer(@PathVariable("customerId") Long customerId){
-        customerService.deleteCustomer(customerId);
+    public ResponseEntity<Object> deleteCustomer(@PathVariable("customerId") Long customerId){
+        Customer deleteCustomerId = customerService.findCustomerById(customerId);
+        if (deleteCustomerId !=null) {
+            customerService.deleteCustomer(customerId);
+            return new  ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PutMapping(path = "{customerId}")
@@ -62,7 +62,7 @@ public class CustomerController {
                                @RequestParam(required =false) String name,
                                @RequestParam(required =false) String lastname,
                                @RequestParam(required=false) String email){
-        customerService.updateCustomer(customerId,name,lastname,email);
+         customerService.updateCustomer(customerId,name,lastname,email);
 
     }
 

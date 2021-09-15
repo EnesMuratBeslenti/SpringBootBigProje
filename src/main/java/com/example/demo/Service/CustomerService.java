@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 
 import javax.transaction.Transactional;
+import java.sql.Array;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -15,6 +16,7 @@ import java.util.Optional;
 public class CustomerService {
 
     private final CustomerRepository customerRepository;
+    private Object StringBuffer;
 
     @Autowired
     public CustomerService(CustomerRepository customerRepository) {
@@ -25,14 +27,21 @@ public class CustomerService {
         return customerRepository.findAll();
     }
 
-    public void addCustomer(Customer customer) {
-        customerRepository.save(customer);
+    public Customer addCustomer(Customer customer) {
+        int[]  numeric = {1,2,3,4,5,6,7,8,9,0};
+        if   (  !customer.getName().isEmpty()&& !customer.getName().matches("[a-zA-Z ]*\\d+.*") &&
+                !customer.getEmail().isEmpty()&&
+                !customer.getLastname().isEmpty()&& !customer.getLastname().matches("[a-zA-Z ]*\\d+.*")){
+            return customerRepository.save(customer);
+        }
+        return null;
     }
 
     public Customer findCustomerById(Long customerId) {
         Optional<Customer> customer = customerRepository.findById(customerId);
         if (customer.isPresent()){
             return customer.get();
+
         }else{
             return null;
         }
@@ -74,6 +83,7 @@ public class CustomerService {
             customer.setEmail(email);
 
         }
+
     }
 
 
