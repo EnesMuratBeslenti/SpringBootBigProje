@@ -27,7 +27,7 @@ public class ProductController {
 
     @GetMapping(path = "{productId}")
     public ResponseEntity<Product> productFindById(@PathVariable("productId") final Long productId) {
-        Product resultId = productService.findByProductId(productId);
+        Product resultId = productService.inquireProduct(productId);
         if (resultId != null) {
             return new ResponseEntity<>(resultId, HttpStatus.OK);
         }
@@ -37,7 +37,7 @@ public class ProductController {
 
     @PostMapping(path = "/add")
     public ResponseEntity<Product> addProduct(@RequestBody Product product) {
-        Product result = productService.addProduct(product);
+        Product result = productService.createProduct(product);
         if (result != null) {
             return new ResponseEntity<>(result, HttpStatus.OK);
         } else {
@@ -48,9 +48,9 @@ public class ProductController {
 
     @DeleteMapping(path = "/sil/{productId}")
     public ResponseEntity<Object> deleteProduct(@PathVariable("productId") Long productId) {
-        Product deleteProductId = productService.findByProductId(productId);
+        Product deleteProductId = productService.inquireProduct(productId);
         if (deleteProductId != null) {
-            productService.deleteByProductId(productId);
+            productService.deleteProduct(productId);
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

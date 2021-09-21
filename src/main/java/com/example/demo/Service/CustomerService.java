@@ -2,12 +2,11 @@ package com.example.demo.Service;
 
 import com.example.demo.Model.Customer;
 import com.example.demo.Repository.CustomerRepository;
+import com.example.demo.UtilityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
 import javax.transaction.Transactional;
-import java.sql.Array;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -16,7 +15,6 @@ import java.util.Optional;
 public class CustomerService {
 
     private final CustomerRepository customerRepository;
-    private Object StringBuffer;
 
     @Autowired
     public CustomerService(CustomerRepository customerRepository) {
@@ -27,17 +25,17 @@ public class CustomerService {
         return customerRepository.findAll();
     }
 
-    public Customer addCustomer(Customer customer) {
+    public Customer createCustomer(Customer customer) {
         int[]  numeric = {1,2,3,4,5,6,7,8,9,0};
-        if   (  !customer.getName().isEmpty()&& !customer.getName().matches("[a-zA-Z ]*\\d+.*") &&
-                !customer.getEmail().isEmpty()&&
-                !customer.getLastname().isEmpty()&& !customer.getLastname().matches("[a-zA-Z ]*\\d+.*")){
+        if   (          UtilityService.isNotEmpty(customer.getName())&& !customer.getName().matches("[a-zA-Z ]*\\d+.*") &&
+                        UtilityService.isNotEmpty(customer.getEmail())&&
+                        UtilityService.isNotEmpty(customer.getLastname())&& !customer.getLastname().matches("[a-zA-Z ]*\\d+.*")){
             return customerRepository.save(customer);
         }
         return null;
     }
 
-    public Customer findCustomerById(Long customerId) {
+    public Customer inquireCustomer(Long customerId) {
         Optional<Customer> customer = customerRepository.findById(customerId);
         if (customer.isPresent()){
             return customer.get();
@@ -81,9 +79,7 @@ public class CustomerService {
                 email.length() > 0 &&
                 !Objects.equals(customer.getEmail(), email)){
             customer.setEmail(email);
-
         }
-
     }
 
 

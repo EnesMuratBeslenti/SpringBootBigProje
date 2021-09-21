@@ -19,7 +19,7 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    public Product addProduct(Product product) {
+    public Product createProduct(Product product) {
         if (!product.getName().isEmpty() &&
                 product.getPrice() > 0) {
             return productRepository.save(product);
@@ -32,7 +32,7 @@ public class ProductService {
         return productRepository.findAll();
     }
 
-    public Product findByProductId(Long productId) {
+    public Product inquireProduct(Long productId) {
        Optional<Product> product = productRepository.findById(productId);
         if (!product.isEmpty()) {
             return product.get();
@@ -41,8 +41,8 @@ public class ProductService {
 
         }
     }
-    public Product deleteByProductId(Long productId){
-        if (findByProductId(productId) !=null){
+    public Product deleteProduct(Long productId){
+        if (inquireProduct(productId) !=null){
             productRepository.deleteById(productId);
         }
        return null;
