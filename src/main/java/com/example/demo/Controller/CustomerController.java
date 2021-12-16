@@ -28,7 +28,7 @@ public class CustomerController {
 
     @GetMapping(path = "/{customerId}")
     public ResponseEntity<Customer> getFindById(@PathVariable("customerId") final Long customerId) {
-        Customer customer = customerService.findCustomerById(customerId);
+        Customer customer = customerService.inquireCustomer(customerId);
         if (customer == null) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
@@ -39,7 +39,7 @@ public class CustomerController {
 
     @PostMapping(path = "/add")
     public ResponseEntity<Customer> addCustomer(@RequestBody Customer customer){
-        Customer result = customerService.addCustomer(customer);
+        Customer result = customerService.createCustomer(customer);
        if (result != null){
 
            return new ResponseEntity<>(result ,HttpStatus.CREATED);
@@ -49,7 +49,7 @@ public class CustomerController {
 
     @DeleteMapping(path = "{customerId}")
     public ResponseEntity<Object> deleteCustomer(@PathVariable("customerId") Long customerId){
-        Customer deleteCustomerId = customerService.findCustomerById(customerId);
+        Customer deleteCustomerId = customerService.inquireCustomer(customerId);
         if (deleteCustomerId !=null) {
             customerService.deleteCustomer(customerId);
             return new  ResponseEntity<>(HttpStatus.OK);

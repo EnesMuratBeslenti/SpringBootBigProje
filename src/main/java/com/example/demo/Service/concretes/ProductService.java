@@ -20,7 +20,7 @@ public class ProductService  implements IProductService {
         this.productRepository = productRepository;
     }
 
-    public Product addProduct(Product product) {
+    public Product createProduct(Product product) {
         if (!product.getName().isEmpty() &&
                 product.getPrice() > 0) {
             return productRepository.save(product);
@@ -33,12 +33,16 @@ public class ProductService  implements IProductService {
         return productRepository.findAll();
     }
 
+<<<<<<< HEAD:src/main/java/com/example/demo/Service/concretes/ProductService.java
     @Override
     public Product findByProductId() {
         return null;
     }
 
     public Product findByProductId(Long productId) {
+=======
+    public Product inquireProduct(Long productId) {
+>>>>>>> dabe32c5f04979aad0504c0de663ba7a9c5e1871:src/main/java/com/example/demo/Service/ProductService.java
        Optional<Product> product = productRepository.findById(productId);
         if (!product.isEmpty()) {
             return product.get();
@@ -47,8 +51,8 @@ public class ProductService  implements IProductService {
 
         }
     }
-    public Product deleteByProductId(Long productId){
-        if (findByProductId(productId) !=null){
+    public Product deleteProduct(Long productId){
+        if (inquireProduct(productId) !=null){
             productRepository.deleteById(productId);
         }
        return null;

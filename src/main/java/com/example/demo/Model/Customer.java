@@ -1,6 +1,7 @@
 package com.example.demo.Model;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table
@@ -76,5 +77,18 @@ public class Customer {
                 ", lastname='" + lastname + '\'' +
                 ", email='" + email + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Customer)) return false;
+        Customer customer = (Customer) o;
+        return Objects.equals(getId(), customer.getId()) && getName().equals(customer.getName()) && getLastname().equals(customer.getLastname()) && getEmail().equals(customer.getEmail());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getName(), getLastname(), getEmail());
     }
 }
