@@ -1,7 +1,8 @@
-package com.example.demo.Service;
+package com.example.demo.Service.concretes;
 
 import com.example.demo.Model.Product;
 import com.example.demo.Repository.ProductRepository;
+import com.example.demo.Service.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +12,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Service
-public class ProductService {
+public class ProductService  implements IProductService {
     private final ProductRepository productRepository;
 
     @Autowired
@@ -30,6 +31,11 @@ public class ProductService {
 
     public List<Product> getProduct() {
         return productRepository.findAll();
+    }
+
+    @Override
+    public Product findByProductId() {
+        return null;
     }
 
     public Product findByProductId(Long productId) {
